@@ -1,12 +1,16 @@
 .gsap_nameIn {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-}
+  display: grid;
+  place-items: center;
+  height: 100vh;
 
-.gsap_nameIn h1 {
+  h1 {
     font-size: 7rem;
     text-transform: uppercase;
     font-weight: bold;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  :global(#nameIn-target) {
+    opacity: 0;
+  }
 }
