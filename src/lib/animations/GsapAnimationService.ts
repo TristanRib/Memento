@@ -55,9 +55,6 @@ export default class GsapAnimationService {
         const parallaxTarget = document.querySelector(target);
 
         if (parallaxTarget) {
-            console.log("innerWidth", window.innerWidth);
-            console.log("innerWidth", window.innerHeight);
-
             const handleMouseMove = (e: MouseEvent) => {
                 const mouseX = e.clientX / window.innerWidth;
                 const mouseY = e.clientY / window.innerHeight;
