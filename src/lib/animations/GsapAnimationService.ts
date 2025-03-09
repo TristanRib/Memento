@@ -1,18 +1,23 @@
-"use client"
-
 import gsap from "gsap";
 import SplitType from "split-type";
+import styles from "@/components/hero.module.scss";
 
-interface params {
-    target: string;
+interface Params {
+    target: HTMLElement | null;
     onComplete?: gsap.Callback;
 }
 
 export default class GsapAnimationService {
-    private static gsapContext: gsap.Context = gsap.context(() => {});
+    private static gsapContext: gsap.Context = gsap.context(() => {
+    });
 
-    static nameIn({target, onComplete = () => {}}: params): void {
-        if (!document.querySelector(".nameIn-char")) {
+    static textIn({
+                      target, onComplete = () => {
+        }
+                  }: Params): void {
+        if (!target) return;
+
+        if (!target.querySelector(".nameIn-char")) {
             new SplitType(target, {
                 types: "words,chars",
                 wordClass: "nameIn-word",
@@ -21,13 +26,11 @@ export default class GsapAnimationService {
         }
 
         this.gsapContext.add(() => {
-            const timeline = gsap.timeline({
-                onComplete: onComplete
-            });
+            const timeline = gsap.timeline({onComplete});
 
-            timeline.set('.nameIn-char', {y: 128});
+            timeline.set(".nameIn-char", {y: 128});
             timeline.set(target, {opacity: 1});
-            timeline.to('.nameIn-char', {
+            timeline.to(".nameIn-char", {
                 y: 0,
                 stagger: 0.05,
                 duration: 0.5,
@@ -36,11 +39,14 @@ export default class GsapAnimationService {
         });
     }
 
-    static maskOut({target, onComplete = () => {}}: params): void {
+    static maskSizeUp({
+                          target, onComplete = () => {
+        }
+                      }: Params): void {
+        if (!target) return;
+
         this.gsapContext.add(() => {
-            const timeline = gsap.timeline({
-                onComplete: onComplete
-            });
+            const timeline = gsap.timeline({onComplete});
 
             timeline.to(target, {
                 maskSize: "100% 100%",
@@ -51,33 +57,41 @@ export default class GsapAnimationService {
         });
     }
 
-    static heroParallax({target, onComplete = () => {}}: params) {
-        const parallaxTarget = document.querySelector(target);
+    static parallax({target}: Params) {
+        if (!target) return;
 
-        if (parallaxTarget) {
-            const handleMouseMove = (e: MouseEvent) => {
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
+        let animationFrameId: number;
 
-                const movementX = 1 - (mouseX - 0.5) * 30;
-                const movementY = 1 - (mouseY - 0.5) * 30;
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = target.getBoundingClientRect();
+            const targetCenterX = rect.width / 2;
+            const targetCenterY = rect.height / 2;
 
+            const mouseToTargetCenterX = e.clientX - rect.left - targetCenterX;
+            const mouseToTargetCenterY = e.clientY - rect.top - targetCenterY;
+
+            const parallaxPower = 30;
+
+            const movementX = 1 - (mouseToTargetCenterX / targetCenterX) * parallaxPower;
+            const movementY = 1 - (mouseToTargetCenterY / targetCenterY) * parallaxPower;
+
+            cancelAnimationFrame(animationFrameId);
+
+            animationFrameId = requestAnimationFrame(() => {
                 gsap.to(target, {
-                    xPercent: -5,
                     x: movementX,
-                    yPercent: -5,
                     y: movementY,
-                    duration: 1,
-                    ease: "power2.out"
+                    duration: 0.5,
+                    ease: "power2.out",
                 });
-            };
+            });
+        };
 
-            window.addEventListener('mousemove', handleMouseMove);
+        target.addEventListener("pointermove", handleMouseMove);
 
-            return () => {
-                window.removeEventListener('mousemove', handleMouseMove);
-            };
-        }
+        return () => {
+            target.removeEventListener("pointermove", handleMouseMove);
+        };
     }
 
     static cleanup() {

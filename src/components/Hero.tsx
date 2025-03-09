@@ -1,36 +1,21 @@
-import {useEffect} from "react";
-import GsapAnimationService from "@/lib/animations/GsapAnimationService";
+"use client";
+
 import styles from "@/components/hero.module.scss";
+import {useHeroAnimation} from "@/hooks/UseHeroAnimation";
 
 export default function Hero() {
-    useEffect(() => {
-        GsapAnimationService.heroParallax({
-            target: `.${styles.maskImage}`,
-        });
-        GsapAnimationService.nameIn({
-            target: `.${styles.headingTitle}`,
-            onComplete: () => {
-                GsapAnimationService.maskOut({
-                    target: `.${styles.frameMask}`,
-                });
-            }
-        });
-
-        return () => {
-            GsapAnimationService.cleanup();
-        };
-    }, [])
+    const {headingTitleRef, frameMaskRef, maskImageRef} = useHeroAnimation();
 
     return (
         <section className={styles.heroSection}>
             <div className={styles.headingTitleWrapper}>
-                <h1 className={styles.headingTitle}>Tristan.Riboulet</h1>
+                <h1 ref={headingTitleRef} className={styles.headingTitle}>Tristan.Riboulet</h1>
             </div>
 
             <div className={styles.frame}>
-                <div className={styles.frameMask}>
+                <div ref={frameMaskRef} className={styles.frameMask}>
                     <div className={styles.maskContent}>
-                        <img src="/images/hero_background.jpg" alt="" className={styles.maskImage} />
+                        <img ref={maskImageRef} src="/images/hero_background.jpg" alt="" className={styles.maskImage}/>
                     </div>
                 </div>
             </div>
