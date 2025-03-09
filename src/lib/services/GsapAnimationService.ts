@@ -1,6 +1,5 @@
 import gsap from "gsap";
 import SplitType from "split-type";
-import styles from "@/components/hero.module.scss";
 
 interface Params {
     target: HTMLElement | null;
@@ -8,13 +7,9 @@ interface Params {
 }
 
 export default class GsapAnimationService {
-    private static gsapContext: gsap.Context = gsap.context(() => {
-    });
+    private static gsapContext: gsap.Context = gsap.context(() => {});
 
-    static textIn({
-                      target, onComplete = () => {
-        }
-                  }: Params): void {
+    static textIn({target, onComplete = () => {}}: Params): void {
         if (!target) return;
 
         if (!target.querySelector(".nameIn-char")) {
@@ -39,10 +34,7 @@ export default class GsapAnimationService {
         });
     }
 
-    static maskSizeUp({
-                          target, onComplete = () => {
-        }
-                      }: Params): void {
+    static maskSizeUp({target, onComplete = () => {}}: Params): void {
         if (!target) return;
 
         this.gsapContext.add(() => {
@@ -74,12 +66,12 @@ export default class GsapAnimationService {
             const movementY = 1 - (mouseToTargetCenterY / targetCenterY) * parallaxPower;
 
             gsap.to(target, {
-                x: movementX,
-                y: movementY,
+                transform: `translate(${movementX}px, ${movementY}px)`,
                 duration: 0.5,
                 ease: "power2.out",
             });
         };
+
 
         target.addEventListener("pointermove", handleMouseMove);
 

@@ -6,10 +6,10 @@
 
 .headingTitleWrapper {
   position: absolute;
-  display: grid;
-  place-items: center;
   height: 100%;
   width: 100%;
+  display: grid;
+  place-items: center;
   z-index: 1;
   pointer-events: none;
 }
@@ -22,13 +22,7 @@
   opacity: 0;
 }
 
-.frame {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.frameMask {
+.mask {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -54,8 +48,8 @@
 
 .maskImage {
   position: absolute;
-  width: 110%;
-  height: 110%;
+  width: 120%;
+  height: 120%;
   object-fit: cover;
   object-position: center;
   will-change: transform;

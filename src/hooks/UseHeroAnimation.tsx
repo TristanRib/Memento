@@ -1,7 +1,5 @@
-"use client";
-
 import {useEffect, useRef} from "react";
-import GsapAnimationService from "@/lib/animations/GsapAnimationService";
+import GsapAnimationService from "@/lib/services/GsapAnimationService";
 
 export function useHeroAnimation() {
     const headingTitleRef = useRef<HTMLHeadingElement>(null);

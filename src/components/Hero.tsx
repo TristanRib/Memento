@@ -12,11 +12,9 @@ export default function Hero() {
                 <h1 ref={headingTitleRef} className={styles.headingTitle}>Tristan.Riboulet</h1>
             </div>
 
-            <div className={styles.frame}>
-                <div ref={frameMaskRef} className={styles.frameMask}>
-                    <div className={styles.maskContent}>
-                        <img ref={maskImageRef} src="/images/hero_background.jpg" alt="" className={styles.maskImage}/>
-                    </div>
+            <div ref={frameMaskRef} className={styles.mask}>
+                <div className={styles.maskContent}>
+                    <img ref={maskImageRef} src="/images/hero_background.jpg" alt="" className={styles.maskImage}/>
                 </div>
             </div>
         </section>
