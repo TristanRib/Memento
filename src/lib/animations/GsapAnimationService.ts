@@ -60,8 +60,6 @@ export default class GsapAnimationService {
     static parallax({target}: Params) {
         if (!target) return;
 
-        let animationFrameId: number;
-
         const handleMouseMove = (e: MouseEvent) => {
             const rect = target.getBoundingClientRect();
             const targetCenterX = rect.width / 2;
@@ -75,15 +73,11 @@ export default class GsapAnimationService {
             const movementX = 1 - (mouseToTargetCenterX / targetCenterX) * parallaxPower;
             const movementY = 1 - (mouseToTargetCenterY / targetCenterY) * parallaxPower;
 
-            cancelAnimationFrame(animationFrameId);
-
-            animationFrameId = requestAnimationFrame(() => {
-                gsap.to(target, {
-                    x: movementX,
-                    y: movementY,
-                    duration: 0.5,
-                    ease: "power2.out",
-                });
+            gsap.to(target, {
+                x: movementX,
+                y: movementY,
+                duration: 0.5,
+                ease: "power2.out",
             });
         };
 
