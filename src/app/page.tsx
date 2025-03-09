@@ -1,8 +1,10 @@
+import Hero from "@/components/Hero";
+
 export default function Page() {
     return (
-        <div>
-            <main>
-            </main>
-        </div>
+        <main>
+            <Hero/>
+            {/*<section style={{height: "100vh", backgroundColor: "darkolivegreen"}}/>*/}
+        </main>
     );
 }
